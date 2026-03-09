@@ -77,8 +77,8 @@ export function Dashboard({ weekStart }: DashboardProps) {
                 paddingAngle={2}
                 dataKey="value"
               >
-                <Cell className="fill-primary" />
-                <Cell className="fill-light-green" />
+                <Cell fill="hsl(123, 43%, 34%)" />
+                <Cell fill="hsl(122, 35%, 75%)" />
               </Pie>
             </PieChart>
           </ResponsiveContainer>
