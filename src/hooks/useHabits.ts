@@ -27,6 +27,7 @@ function loadHabits(): Habit[] {
 
 function saveHabits(habits: Habit[]): void {
   localStorage.setItem(HABITS_KEY, JSON.stringify(habits));
+  import('@/components/SaveIndicator').then(m => m.emitSave());
 }
 
 function loadCompletions(weekKey: string): HabitCompletions {
