@@ -29,9 +29,50 @@ function WeeklySummaryBar({ weekStart, onPrev, onNext }: {
   );
 }
 
+function IndexContent({ weekStart, onPrev, onNext }: {
+  weekStart: Date;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => setSettingsOpen(true)}
+        className="fixed top-2 right-2 z-30 bg-card shadow-md border border-border"
+      >
+        <Settings className="h-5 w-5" />
+      </Button>
+
+      <WeeklySummaryBar
+        weekStart={weekStart}
+        onPrev={onPrev}
+        onNext={onNext}
+      />
+
+      <div className="w-full">
+        <WeeklyGrid weekStart={weekStart} />
+      </div>
+
+      <div className="px-4 pb-4">
+        <HabitTrackerPanel weekStart={weekStart} />
+      </div>
+
+      <div className="border-t border-border">
+        <Dashboard weekStart={weekStart} />
+      </div>
+
+      <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <SaveIndicator />
+    </div>
+  );
+}
+
 const Index = () => {
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
-  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handlePreviousWeek = () => setWeekStart((prev) => goToPreviousWeek(prev));
   const handleNextWeek = () => setWeekStart((prev) => goToNextWeek(prev));
@@ -39,43 +80,11 @@ const Index = () => {
   return (
     <WeekTasksProvider weekStart={weekStart}>
       <HabitsProvider weekStart={weekStart}>
-        <div className="min-h-screen bg-background">
-          {/* Settings Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setSettingsOpen(true)}
-            className="fixed top-2 right-2 z-30 bg-card shadow-md border border-border"
-          >
-            <Settings className="h-5 w-5" />
-          </Button>
-
-          {/* Top Summary Bar */}
-          <WeeklySummaryBar
-            weekStart={weekStart}
-            onPrev={handlePreviousWeek}
-            onNext={handleNextWeek}
-          />
-
-          {/* Weekly Grid */}
-          <div className="w-full">
-            <WeeklyGrid weekStart={weekStart} />
-          </div>
-
-          {/* Habit Tracker Panel */}
-          <div className="px-4 pb-4">
-            <HabitTrackerPanel weekStart={weekStart} />
-          </div>
-
-          {/* Dashboard */}
-          <div className="border-t border-border">
-            <Dashboard weekStart={weekStart} />
-          </div>
-
-          {/* Settings Panel */}
-          <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
-          <SaveIndicator />
-        </div>
+        <IndexContent
+          weekStart={weekStart}
+          onPrev={handlePreviousWeek}
+          onNext={handleNextWeek}
+        />
       </HabitsProvider>
     </WeekTasksProvider>
   );
