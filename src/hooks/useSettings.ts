@@ -17,6 +17,7 @@ function loadSettings(): Settings {
 
 function saveSettings(settings: Settings): void {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  import('@/components/SaveIndicator').then(m => m.emitSave());
 }
 
 export function useSettings() {

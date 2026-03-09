@@ -25,6 +25,7 @@ function loadWeekTasks(weekKey: string): WeekTasks {
 
 function saveWeekTasks(weekKey: string, tasks: WeekTasks): void {
   localStorage.setItem(getStorageKey(weekKey), JSON.stringify(tasks));
+  import('@/components/SaveIndicator').then(m => m.emitSave());
 }
 
 export function useWeekTasks(weekStart: Date) {

@@ -74,6 +74,7 @@ const Index = () => {
 
           {/* Settings Panel */}
           <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
+          <SaveIndicator />
         </div>
       </HabitsProvider>
     </WeekTasksProvider>
