@@ -8,6 +8,7 @@ import { HabitTrackerPanel } from '@/components/HabitTrackerPanel';
 import { Dashboard } from '@/components/Dashboard';
 import { SettingsPanel } from '@/components/SettingsPanel';
 import { Button } from '@/components/ui/button';
+import { SaveIndicator } from '@/components/SaveIndicator';
 
 function WeeklySummaryBar({ weekStart, onPrev, onNext }: {
   weekStart: Date;
@@ -73,6 +74,7 @@ const Index = () => {
 
           {/* Settings Panel */}
           <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
+          <SaveIndicator />
         </div>
       </HabitsProvider>
     </WeekTasksProvider>
