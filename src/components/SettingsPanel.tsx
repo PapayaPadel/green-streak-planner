@@ -1,8 +1,10 @@
-import { X, Sun, Moon, Check } from 'lucide-react';
+import { X, Sun, Moon, Check, Download, Upload } from 'lucide-react';
 import { ColorScheme, useSettings } from '@/hooks/useSettings';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
+import { useRef } from 'react';
+import { toast } from 'sonner';
 
 interface SettingsPanelProps {
   isOpen: boolean;
@@ -16,8 +18,49 @@ const COLOR_OPTIONS: { value: ColorScheme; label: string; color: string }[] = [
   { value: 'orange', label: 'Orange', color: 'bg-[hsl(24,95%,38%)]' },
 ];
 
+function exportData() {
+  const data: Record<string, unknown> = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && (key.startsWith('tasks-') || key.startsWith('habits') || key.startsWith('habit-completions-') || key === 'tracker-settings')) {
+      try {
+        data[key] = JSON.parse(localStorage.getItem(key)!);
+      } catch {
+        data[key] = localStorage.getItem(key);
+      }
+    }
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `streak-planner-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast.success('Data exported successfully');
+}
+
+function importData(file: File) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target?.result as string);
+      if (typeof data !== 'object' || data === null) throw new Error('Invalid format');
+      Object.entries(data).forEach(([key, value]) => {
+        localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+      });
+      toast.success('Data imported successfully. Reloading…');
+      setTimeout(() => window.location.reload(), 800);
+    } catch {
+      toast.error('Failed to import: invalid file format');
+    }
+  };
+  reader.readAsText(file);
+}
+
 export function SettingsPanel({ isOpen, onClose }: SettingsPanelProps) {
   const { colorScheme, themeMode, setColorScheme, toggleTheme } = useSettings();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!isOpen) return null;
 
@@ -81,6 +124,39 @@ export function SettingsPanel({ isOpen, onClose }: SettingsPanelProps) {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Backup & Restore */}
+          <div className="space-y-3">
+            <h3 className="font-medium text-sm text-foreground">Backup & Restore</h3>
+            <div className="flex gap-2">
+              <Button variant="outline" className="flex-1 gap-2" onClick={exportData}>
+                <Download className="h-4 w-4" />
+                Export
+              </Button>
+              <Button
+                variant="outline"
+                className="flex-1 gap-2"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Upload className="h-4 w-4" />
+                Import
+              </Button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) importData(file);
+                  e.target.value = '';
+                }}
+              />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Export downloads a JSON backup of all your data. Import restores from a previous backup.
+            </p>
           </div>
 
           {/* Info */}
