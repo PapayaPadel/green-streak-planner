@@ -133,9 +133,10 @@ export function DayColumn({
               <span
                 onClick={() => handleStartEdit(task)}
                 className={cn(
-                  'flex-1 text-sm cursor-pointer truncate',
+                  'flex-1 text-sm cursor-pointer break-words whitespace-normal',
                   task.completed && 'task-done'
                 )}
+                title={task.text}
               >
                 {task.text}
               </span>
