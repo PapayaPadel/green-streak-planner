@@ -1,8 +1,7 @@
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, PieChart, Pie, Tooltip } from 'recharts';
 import { Flame } from 'lucide-react';
 import { getDaysOfWeek, SHORT_DAY_NAMES } from '@/lib/dateUtils';
-import { useWeekTasks } from '@/hooks/useWeekTasks';
-import { useHabits } from '@/hooks/useHabits';
+import { useWeekTasksContext, useHabitsContext } from '@/contexts/TrackerContext';
 import { cn } from '@/lib/utils';
 
 interface DashboardProps {
@@ -11,8 +10,8 @@ interface DashboardProps {
 
 export function Dashboard({ weekStart }: DashboardProps) {
   const days = getDaysOfWeek(weekStart);
-  const { getDayStats, getWeekStats } = useWeekTasks(weekStart);
-  const { habits, getHabitWeeklyRate, calculateStreak } = useHabits(weekStart);
+  const { getDayStats, getWeekStats } = useWeekTasksContext();
+  const { habits, getHabitWeeklyRate, calculateStreak } = useHabitsContext();
 
   const weekStats = getWeekStats();
 
@@ -28,9 +27,13 @@ export function Dashboard({ weekStart }: DashboardProps) {
     { name: 'Remaining', value: Math.max(0, weekStats.totalTasks - weekStats.completedTasks) },
   ];
 
+  if (donutData[0].value === 0 && donutData[1].value === 0) {
+    donutData[1].value = 1; // Prevent empty pie
+  }
+
   const getRateColor = (rate: number) => {
-    if (rate >= 80) return 'bg-accent-green';
-    if (rate >= 60) return 'bg-light-green';
+    if (rate >= 80) return 'bg-success';
+    if (rate >= 60) return 'bg-accent-green';
     if (rate >= 40) return 'bg-warning';
     return 'bg-destructive';
   };
@@ -43,15 +46,15 @@ export function Dashboard({ weekStart }: DashboardProps) {
         <div className="h-[180px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={barChartData}>
-              <XAxis 
-                dataKey="day" 
-                tick={{ fontSize: 10 }} 
-                axisLine={false} 
+              <XAxis
+                dataKey="day"
+                tick={{ fontSize: 10 }}
+                axisLine={false}
                 tickLine={false}
               />
-              <YAxis 
-                tick={{ fontSize: 10 }} 
-                axisLine={false} 
+              <YAxis
+                tick={{ fontSize: 10 }}
+                axisLine={false}
                 tickLine={false}
                 allowDecimals={false}
               />
@@ -82,7 +85,7 @@ export function Dashboard({ weekStart }: DashboardProps) {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <span className="text-2xl font-bold text-primary">{weekStats.percentage}%</span>
           </div>
         </div>
@@ -125,15 +128,19 @@ export function Dashboard({ weekStart }: DashboardProps) {
               const streak = calculateStreak(habit.id);
               return (
                 <div key={habit.id} className="flex items-center gap-2 py-1">
-                  <Flame className={cn(
-                    'w-4 h-4',
-                    streak > 0 ? 'text-warning' : 'text-muted-foreground/30'
-                  )} />
+                  <Flame
+                    className={cn(
+                      'w-4 h-4',
+                      streak > 0 ? 'text-warning' : 'text-muted-foreground/30'
+                    )}
+                  />
                   <span className="flex-1 text-sm truncate">{habit.name}</span>
-                  <span className={cn(
-                    'text-sm font-bold',
-                    streak > 0 ? 'text-warning' : 'text-muted-foreground'
-                  )}>
+                  <span
+                    className={cn(
+                      'text-sm font-bold',
+                      streak > 0 ? 'text-warning' : 'text-muted-foreground'
+                    )}
+                  >
                     {streak} {streak === 1 ? 'day' : 'days'}
                   </span>
                 </div>

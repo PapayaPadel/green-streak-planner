@@ -1,6 +1,6 @@
 import { getDaysOfWeek } from '@/lib/dateUtils';
 import { DayColumn } from './DayColumn';
-import { useWeekTasks } from '@/hooks/useWeekTasks';
+import { useWeekTasksContext } from '@/contexts/TrackerContext';
 
 interface WeeklyGridProps {
   weekStart: Date;
@@ -15,7 +15,7 @@ export function WeeklyGrid({ weekStart }: WeeklyGridProps) {
     updateTask,
     deleteTask,
     getDayStats,
-  } = useWeekTasks(weekStart);
+  } = useWeekTasksContext();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3 p-4">

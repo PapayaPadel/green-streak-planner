@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Plus, Trash2, Check, X, Edit2 } from 'lucide-react';
-import { Habit, HabitStatus, useHabits } from '@/hooks/useHabits';
+import { HabitStatus, Habit } from '@/hooks/useHabits';
 import { SHORT_DAY_NAMES } from '@/lib/dateUtils';
+import { useHabitsContext } from '@/contexts/TrackerContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -27,7 +28,7 @@ function HabitStatusButton({ status, onClick }: { status: HabitStatus; onClick: 
   );
 }
 
-export function HabitTrackerPanel({ weekStart }: HabitTrackerPanelProps) {
+export function HabitTrackerPanel({ weekStart: _ }: HabitTrackerPanelProps) {
   const {
     habits,
     addHabit,
@@ -36,7 +37,7 @@ export function HabitTrackerPanel({ weekStart }: HabitTrackerPanelProps) {
     cycleHabitStatus,
     getHabitStatus,
     getDayHabitStats,
-  } = useHabits(weekStart);
+  } = useHabitsContext();
 
   const [newHabitName, setNewHabitName] = useState('');
   const [isAddingHabit, setIsAddingHabit] = useState(false);
@@ -80,7 +81,7 @@ export function HabitTrackerPanel({ weekStart }: HabitTrackerPanelProps) {
               </div>
             ))}
           </div>
-          <div className="w-12" /> {/* Space for actions */}
+          <div className="w-14" />
         </div>
 
         {/* Habit rows */}
@@ -116,7 +117,7 @@ export function HabitTrackerPanel({ weekStart }: HabitTrackerPanelProps) {
                 ))}
               </div>
 
-              <div className="w-12 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -158,7 +159,7 @@ export function HabitTrackerPanel({ weekStart }: HabitTrackerPanelProps) {
                 );
               })}
             </div>
-            <div className="w-12" />
+            <div className="w-14" />
           </div>
         )}
 
