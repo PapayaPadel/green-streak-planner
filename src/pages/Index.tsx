@@ -39,6 +39,7 @@ function IndexContent({ weekStart, onPrev, onNext }: {
 
   return (
     <div className="min-h-screen bg-background">
+      <WeeklyExportReminder />
       <Button
         variant="ghost"
         size="icon"
