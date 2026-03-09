@@ -56,17 +56,14 @@ const Index = () => {
             onNext={handleNextWeek}
           />
 
-          {/* Main Content */}
-          <div className="flex flex-col lg:flex-row gap-0">
-            {/* Weekly Grid */}
-            <div className="flex-1 min-w-0">
-              <WeeklyGrid weekStart={weekStart} />
-            </div>
+          {/* Weekly Grid */}
+          <div className="w-full">
+            <WeeklyGrid weekStart={weekStart} />
+          </div>
 
-            {/* Habit Tracker Panel */}
-            <div className="lg:w-[480px] xl:w-[520px] p-4">
-              <HabitTrackerPanel weekStart={weekStart} />
-            </div>
+          {/* Habit Tracker Panel */}
+          <div className="px-4 pb-4">
+            <HabitTrackerPanel weekStart={weekStart} />
           </div>
 
           {/* Dashboard */}
