@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, PieChart, Pie, Tooltip } from 'recharts';
 import { Flame } from 'lucide-react';
 import { getDaysOfWeek, SHORT_DAY_NAMES } from '@/lib/dateUtils';
 import { useWeekTasks } from '@/hooks/useWeekTasks';
@@ -55,11 +55,8 @@ export function Dashboard({ weekStart }: DashboardProps) {
                 tickLine={false}
                 allowDecimals={false}
               />
-              <Bar dataKey="completed" radius={[4, 4, 0, 0]}>
-                {barChartData.map((_, index) => (
-                  <Cell key={`cell-${index}`} className="fill-accent-green" />
-                ))}
-              </Bar>
+              <Tooltip />
+              <Bar dataKey="completed" radius={[4, 4, 0, 0]} fill="hsl(122, 39%, 49%)" />
             </BarChart>
           </ResponsiveContainer>
         </div>
