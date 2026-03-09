@@ -9,6 +9,7 @@ import { Dashboard } from '@/components/Dashboard';
 import { SettingsPanel } from '@/components/SettingsPanel';
 import { Button } from '@/components/ui/button';
 import { SaveIndicator } from '@/components/SaveIndicator';
+import { WeeklyExportReminder } from '@/components/WeeklyExportReminder';
 
 function WeeklySummaryBar({ weekStart, onPrev, onNext }: {
   weekStart: Date;
@@ -38,6 +39,7 @@ function IndexContent({ weekStart, onPrev, onNext }: {
 
   return (
     <div className="min-h-screen bg-background">
+      <WeeklyExportReminder />
       <Button
         variant="ghost"
         size="icon"
