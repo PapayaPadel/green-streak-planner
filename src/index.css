@@ -2,95 +2,178 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Design System — All colors in HSL */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 123 43% 10%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 125 39% 97%;
+    --card-foreground: 123 43% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 123 43% 10%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Dark green #2E7D32 */
+    --primary: 123 43% 34%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Medium green #4CAF50 */
+    --accent-green: 122 39% 49%;
+    --accent-green-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Light green #A5D6A7 */
+    --light-green: 122 35% 75%;
+    --light-green-foreground: 123 43% 20%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Pale green #E8F5E9 */
+    --pale-green: 125 39% 94%;
+    --pale-green-foreground: 123 43% 30%;
+
+    --secondary: 125 39% 94%;
+    --secondary-foreground: 123 43% 20%;
+
+    --muted: 125 30% 96%;
+    --muted-foreground: 123 10% 50%;
+
+    --accent: 122 35% 75%;
+    --accent-foreground: 123 43% 20%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --success: 122 39% 49%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 125 20% 88%;
+    --input: 125 20% 88%;
+    --ring: 123 43% 34%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Sidebar */
+    --sidebar-background: 125 39% 94%;
+    --sidebar-foreground: 123 43% 20%;
+    --sidebar-primary: 123 43% 34%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 122 35% 85%;
+    --sidebar-accent-foreground: 123 43% 20%;
+    --sidebar-border: 125 20% 85%;
+    --sidebar-ring: 123 43% 34%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Chart colors */
+    --chart-1: 123 43% 34%;
+    --chart-2: 122 39% 49%;
+    --chart-3: 122 35% 75%;
+    --chart-4: 125 39% 94%;
+    --chart-5: 38 92% 50%;
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* App specific */
+    --day-header: 123 43% 34%;
+    --day-header-today: 123 43% 24%;
+    --day-card: 0 0% 100%;
+    --progress-fill: 122 39% 49%;
+    --progress-track: 125 39% 90%;
+    --task-done-text: 122 39% 38%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 123 43% 6%;
+    --foreground: 125 39% 94%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 123 43% 9%;
+    --card-foreground: 125 39% 94%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 123 43% 8%;
+    --popover-foreground: 125 39% 94%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 122 39% 55%;
+    --primary-foreground: 123 43% 6%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --accent-green: 122 39% 55%;
+    --accent-green-foreground: 123 43% 6%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --light-green: 122 25% 35%;
+    --light-green-foreground: 125 39% 90%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --pale-green: 123 30% 12%;
+    --pale-green-foreground: 125 39% 85%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --secondary: 123 30% 14%;
+    --secondary-foreground: 125 39% 90%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --muted: 123 30% 12%;
+    --muted-foreground: 125 20% 60%;
+
+    --accent: 122 25% 30%;
+    --accent-foreground: 125 39% 90%;
+
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 123 30% 20%;
+    --input: 123 30% 18%;
+    --ring: 122 39% 55%;
+
+    --sidebar-background: 123 43% 8%;
+    --sidebar-foreground: 125 39% 90%;
+    --sidebar-primary: 122 39% 55%;
+    --sidebar-primary-foreground: 123 43% 6%;
+    --sidebar-accent: 123 30% 14%;
+    --sidebar-accent-foreground: 125 39% 90%;
+    --sidebar-border: 123 30% 18%;
+    --sidebar-ring: 122 39% 55%;
+
+    --day-header: 123 43% 20%;
+    --day-header-today: 123 43% 14%;
+    --day-card: 123 43% 9%;
+    --progress-fill: 122 39% 55%;
+    --progress-track: 123 30% 18%;
+    --task-done-text: 122 39% 55%;
+  }
+
+  /* Color scheme overrides */
+  [data-scheme="blue"] {
+    --primary: 213 94% 32%;
+    --accent-green: 210 79% 46%;
+    --light-green: 210 60% 75%;
+    --pale-green: 210 50% 94%;
+    --day-header: 213 94% 32%;
+    --day-header-today: 213 94% 22%;
+    --progress-fill: 210 79% 46%;
+    --task-done-text: 210 79% 36%;
+    --ring: 213 94% 32%;
+    --border: 210 30% 88%;
+  }
+
+  [data-scheme="purple"] {
+    --primary: 271 55% 35%;
+    --accent-green: 265 60% 50%;
+    --light-green: 265 45% 75%;
+    --pale-green: 265 40% 94%;
+    --day-header: 271 55% 35%;
+    --day-header-today: 271 55% 25%;
+    --progress-fill: 265 60% 50%;
+    --task-done-text: 265 60% 40%;
+    --ring: 271 55% 35%;
+    --border: 265 20% 88%;
+  }
+
+  [data-scheme="orange"] {
+    --primary: 24 95% 38%;
+    --accent-green: 27 87% 50%;
+    --light-green: 30 70% 75%;
+    --pale-green: 30 60% 94%;
+    --day-header: 24 95% 38%;
+    --day-header-today: 24 95% 28%;
+    --progress-fill: 27 87% 50%;
+    --task-done-text: 27 87% 38%;
+    --ring: 24 95% 38%;
+    --border: 27 25% 88%;
   }
 }
 
@@ -101,5 +184,46 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
+
+@layer components {
+  .day-header {
+    background-color: hsl(var(--day-header));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .day-header-today {
+    background-color: hsl(var(--day-header-today));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .progress-bar-fill {
+    background-color: hsl(var(--progress-fill));
+  }
+
+  .progress-bar-track {
+    background-color: hsl(var(--progress-track));
+  }
+
+  .task-done {
+    color: hsl(var(--task-done-text));
+    text-decoration: line-through;
+  }
+
+  .habit-done {
+    background-color: hsl(var(--accent-green));
+    color: hsl(var(--accent-green-foreground));
+  }
+
+  .habit-missed {
+    background-color: hsl(var(--destructive));
+    color: hsl(var(--destructive-foreground));
+  }
+
+  .habit-clear {
+    background-color: hsl(var(--pale-green));
+    color: hsl(var(--muted-foreground));
   }
 }
