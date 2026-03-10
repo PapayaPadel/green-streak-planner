@@ -1,34 +1,13 @@
 import { useState } from 'react';
 import { Settings } from 'lucide-react';
 import { getWeekStart, goToNextWeek, goToPreviousWeek } from '@/lib/dateUtils';
-import { WeekTasksProvider, HabitsProvider, useWeekTasksContext } from '@/contexts/TrackerContext';
-import { TopSummaryBar } from '@/components/TopSummaryBar';
+import { WeekTasksProvider, HabitsProvider } from '@/contexts/TrackerContext';
+import { TopSummarySection } from '@/components/TopSummarySection';
 import { WeeklyGrid } from '@/components/WeeklyGrid';
-import { HabitTrackerPanel } from '@/components/HabitTrackerPanel';
-import { Dashboard } from '@/components/Dashboard';
 import { SettingsPanel } from '@/components/SettingsPanel';
 import { Button } from '@/components/ui/button';
 import { SaveIndicator } from '@/components/SaveIndicator';
 import { WeeklyExportReminder } from '@/components/WeeklyExportReminder';
-
-function WeeklySummaryBar({ weekStart, onPrev, onNext }: {
-  weekStart: Date;
-  onPrev: () => void;
-  onNext: () => void;
-}) {
-  const { getWeekStats } = useWeekTasksContext();
-  const weekStats = getWeekStats();
-  return (
-    <TopSummaryBar
-      weekStart={weekStart}
-      completedTasks={weekStats.completedTasks}
-      totalTasks={weekStats.totalTasks}
-      percentage={weekStats.percentage}
-      onPreviousWeek={onPrev}
-      onNextWeek={onNext}
-    />
-  );
-}
 
 function IndexContent({ weekStart, onPrev, onNext }: {
   weekStart: Date;
