@@ -5,6 +5,7 @@ import { Task } from '@/hooks/useWeekTasks';
 import { isToday } from '@/lib/dateUtils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { MiniDonut } from '@/components/MiniDonut';
 import { cn } from '@/lib/utils';
 
 interface DayColumnProps {
