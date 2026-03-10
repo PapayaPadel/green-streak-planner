@@ -5,6 +5,7 @@ import { Task } from '@/hooks/useWeekTasks';
 import { isToday } from '@/lib/dateUtils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { MiniDonut } from '@/components/MiniDonut';
 import { cn } from '@/lib/utils';
 
 interface DayColumnProps {
@@ -17,21 +18,6 @@ interface DayColumnProps {
   onDeleteTask: (taskId: string) => void;
 }
 
-function ProgressBlocks({ completed, total }: { completed: number; total: number }) {
-  const maxBlocks = 8;
-  const displayTotal = Math.min(total || 1, maxBlocks);
-  const displayCompleted = Math.min(completed, displayTotal);
-
-  return (
-    <div className="flex justify-center gap-0.5 text-sm font-mono">
-      {Array.from({ length: maxBlocks }).map((_, i) => (
-        <span key={i} className={i < displayCompleted ? 'text-accent-green' : 'text-muted-foreground/30'}>
-          {i < displayTotal ? (i < displayCompleted ? '█' : '░') : ' '}
-        </span>
-      ))}
-    </div>
-  );
-}
 
 export function DayColumn({
   date,
@@ -81,14 +67,11 @@ export function DayColumn({
       </div>
 
       {/* Stats */}
-      <div className="px-3 py-3 border-b border-border bg-card">
-        <div className="text-2xl md:text-3xl font-bold text-primary text-center">
-          {stats.percentage}%
-        </div>
-        <div className="text-xs text-muted-foreground italic text-center mb-2">
+      <div className="px-3 py-3 border-b border-border bg-card flex flex-col items-center gap-1">
+        <MiniDonut percentage={stats.percentage} size={56} strokeWidth={4} />
+        <div className="text-xs text-muted-foreground italic text-center">
           {stats.completed} / {stats.total} done
         </div>
-        <ProgressBlocks completed={stats.completed} total={stats.total} />
       </div>
 
       {/* Tasks Label */}

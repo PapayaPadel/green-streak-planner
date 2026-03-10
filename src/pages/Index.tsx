@@ -1,34 +1,13 @@
 import { useState } from 'react';
 import { Settings } from 'lucide-react';
 import { getWeekStart, goToNextWeek, goToPreviousWeek } from '@/lib/dateUtils';
-import { WeekTasksProvider, HabitsProvider, useWeekTasksContext } from '@/contexts/TrackerContext';
-import { TopSummaryBar } from '@/components/TopSummaryBar';
+import { WeekTasksProvider, HabitsProvider } from '@/contexts/TrackerContext';
+import { TopSummarySection } from '@/components/TopSummarySection';
 import { WeeklyGrid } from '@/components/WeeklyGrid';
-import { HabitTrackerPanel } from '@/components/HabitTrackerPanel';
-import { Dashboard } from '@/components/Dashboard';
 import { SettingsPanel } from '@/components/SettingsPanel';
 import { Button } from '@/components/ui/button';
 import { SaveIndicator } from '@/components/SaveIndicator';
 import { WeeklyExportReminder } from '@/components/WeeklyExportReminder';
-
-function WeeklySummaryBar({ weekStart, onPrev, onNext }: {
-  weekStart: Date;
-  onPrev: () => void;
-  onNext: () => void;
-}) {
-  const { getWeekStats } = useWeekTasksContext();
-  const weekStats = getWeekStats();
-  return (
-    <TopSummaryBar
-      weekStart={weekStart}
-      completedTasks={weekStats.completedTasks}
-      totalTasks={weekStats.totalTasks}
-      percentage={weekStats.percentage}
-      onPreviousWeek={onPrev}
-      onNextWeek={onNext}
-    />
-  );
-}
 
 function IndexContent({ weekStart, onPrev, onNext }: {
   weekStart: Date;
@@ -49,22 +28,14 @@ function IndexContent({ weekStart, onPrev, onNext }: {
         <Settings className="h-5 w-5" />
       </Button>
 
-      <WeeklySummaryBar
+      <TopSummarySection
         weekStart={weekStart}
-        onPrev={onPrev}
-        onNext={onNext}
+        onPreviousWeek={onPrev}
+        onNextWeek={onNext}
       />
 
       <div className="w-full">
         <WeeklyGrid weekStart={weekStart} />
-      </div>
-
-      <div className="px-4 pb-4">
-        <HabitTrackerPanel weekStart={weekStart} />
-      </div>
-
-      <div className="border-t border-border">
-        <Dashboard weekStart={weekStart} />
       </div>
 
       <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
