@@ -28,22 +28,14 @@ function IndexContent({ weekStart, onPrev, onNext }: {
         <Settings className="h-5 w-5" />
       </Button>
 
-      <WeeklySummaryBar
+      <TopSummarySection
         weekStart={weekStart}
-        onPrev={onPrev}
-        onNext={onNext}
+        onPreviousWeek={onPrev}
+        onNextWeek={onNext}
       />
 
       <div className="w-full">
         <WeeklyGrid weekStart={weekStart} />
-      </div>
-
-      <div className="px-4 pb-4">
-        <HabitTrackerPanel weekStart={weekStart} />
-      </div>
-
-      <div className="border-t border-border">
-        <Dashboard weekStart={weekStart} />
       </div>
 
       <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />

@@ -82,14 +82,11 @@ export function DayColumn({
       </div>
 
       {/* Stats */}
-      <div className="px-3 py-3 border-b border-border bg-card">
-        <div className="text-2xl md:text-3xl font-bold text-primary text-center">
-          {stats.percentage}%
-        </div>
-        <div className="text-xs text-muted-foreground italic text-center mb-2">
+      <div className="px-3 py-3 border-b border-border bg-card flex flex-col items-center gap-1">
+        <MiniDonut percentage={stats.percentage} size={56} strokeWidth={4} />
+        <div className="text-xs text-muted-foreground italic text-center">
           {stats.completed} / {stats.total} done
         </div>
-        <ProgressBlocks completed={stats.completed} total={stats.total} />
       </div>
 
       {/* Tasks Label */}
