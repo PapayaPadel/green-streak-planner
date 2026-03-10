@@ -18,21 +18,6 @@ interface DayColumnProps {
   onDeleteTask: (taskId: string) => void;
 }
 
-function ProgressBlocks({ completed, total }: { completed: number; total: number }) {
-  const maxBlocks = 8;
-  const displayTotal = Math.min(total || 1, maxBlocks);
-  const displayCompleted = Math.min(completed, displayTotal);
-
-  return (
-    <div className="flex justify-center gap-0.5 text-sm font-mono">
-      {Array.from({ length: maxBlocks }).map((_, i) => (
-        <span key={i} className={i < displayCompleted ? 'text-accent-green' : 'text-muted-foreground/30'}>
-          {i < displayTotal ? (i < displayCompleted ? '█' : '░') : ' '}
-        </span>
-      ))}
-    </div>
-  );
-}
 
 export function DayColumn({
   date,
