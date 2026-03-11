@@ -38,7 +38,7 @@ function IndexContent({ weekStart, onPrev, onNext }: {
         <WeeklyGrid weekStart={weekStart} />
       </div>
 
-      <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} weekStart={weekStart} />
       <SaveIndicator />
     </div>
   );

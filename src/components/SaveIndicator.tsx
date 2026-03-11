@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Global event bus for save notifications
 const SAVE_EVENT = 'localStorage-save';
 
 export function emitSave() {
+  localStorage.setItem('last-saved-at', new Date().toISOString());
   window.dispatchEvent(new Event(SAVE_EVENT));
+}
+
+export function getLastSavedTime(): string | null {
+  return localStorage.getItem('last-saved-at');
 }
 
 export function SaveIndicator() {
