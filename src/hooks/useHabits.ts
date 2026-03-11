@@ -10,11 +10,16 @@ export type HabitStatus = 'clear' | 'done' | 'missed';
 
 export interface HabitCompletions {
   [habitId: string]: {
-    [dayIndex: number]: HabitStatus; // dayIndex 0-6 (Mon-Sun)
+    [dayIndex: number]: HabitStatus;
   };
 }
 
+export interface HabitSchedules {
+  [habitId: string]: number[]; // scheduled day indices 0-6
+}
+
 const HABITS_KEY = 'habits';
+const SCHEDULES_KEY = 'habit-schedules';
 
 function getCompletionsKey(weekKey: string): string {
   return `habit-completions-${weekKey}`;
@@ -40,14 +45,42 @@ function saveCompletions(weekKey: string, completions: HabitCompletions): void {
   import('@/components/SaveIndicator').then(m => m.emitSave());
 }
 
+function loadSchedules(): HabitSchedules {
+  const stored = localStorage.getItem(SCHEDULES_KEY);
+  return stored ? JSON.parse(stored) : {};
+}
+
+function saveSchedules(schedules: HabitSchedules): void {
+  localStorage.setItem(SCHEDULES_KEY, JSON.stringify(schedules));
+  import('@/components/SaveIndicator').then(m => m.emitSave());
+}
+
+const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
+
 export function useHabits(weekStart: Date) {
   const weekKey = getWeekKey(weekStart);
   const [habits, setHabits] = useState<Habit[]>(() => loadHabits());
   const [completions, setCompletions] = useState<HabitCompletions>(() => loadCompletions(weekKey));
+  const [schedules, setSchedulesState] = useState<HabitSchedules>(() => loadSchedules());
 
   useEffect(() => {
     setCompletions(loadCompletions(weekKey));
   }, [weekKey]);
+
+  const getHabitSchedule = useCallback((habitId: string): number[] => {
+    return schedules[habitId] || ALL_DAYS;
+  }, [schedules]);
+
+  const setHabitSchedule = useCallback((habitId: string, days: number[]) => {
+    const newSchedules = { ...schedules, [habitId]: days.sort() };
+    setSchedulesState(newSchedules);
+    saveSchedules(newSchedules);
+  }, [schedules]);
+
+  const isHabitScheduledForDay = useCallback((habitId: string, dayIndex: number): boolean => {
+    const schedule = schedules[habitId] || ALL_DAYS;
+    return schedule.includes(dayIndex);
+  }, [schedules]);
 
   const addHabit = useCallback((name: string) => {
     const newHabit: Habit = {
@@ -69,13 +102,15 @@ export function useHabits(weekStart: Date) {
     const newHabits = habits.filter(h => h.id !== habitId);
     setHabits(newHabits);
     saveHabits(newHabits);
-
-    // Also clear completions for this habit
     const newCompletions = { ...completions };
     delete newCompletions[habitId];
     setCompletions(newCompletions);
     saveCompletions(weekKey, newCompletions);
-  }, [habits, completions, weekKey]);
+    const newSchedules = { ...schedules };
+    delete newSchedules[habitId];
+    setSchedulesState(newSchedules);
+    saveSchedules(newSchedules);
+  }, [habits, completions, weekKey, schedules]);
 
   const cycleHabitStatus = useCallback((habitId: string, dayIndex: number) => {
     const currentStatus = completions[habitId]?.[dayIndex] || 'clear';
@@ -86,10 +121,7 @@ export function useHabits(weekStart: Date) {
 
     const newCompletions: HabitCompletions = {
       ...completions,
-      [habitId]: {
-        ...(completions[habitId] || {}),
-        [dayIndex]: newStatus,
-      },
+      [habitId]: { ...(completions[habitId] || {}), [dayIndex]: newStatus },
     };
     setCompletions(newCompletions);
     saveCompletions(weekKey, newCompletions);
@@ -100,59 +132,59 @@ export function useHabits(weekStart: Date) {
   }, [completions]);
 
   const getDayHabitStats = useCallback((dayIndex: number) => {
-    let total = habits.length;
+    let total = 0;
     let completed = 0;
     habits.forEach(habit => {
-      if (completions[habit.id]?.[dayIndex] === 'done') {
-        completed++;
+      const schedule = schedules[habit.id] || ALL_DAYS;
+      if (schedule.includes(dayIndex)) {
+        total++;
+        if (completions[habit.id]?.[dayIndex] === 'done') completed++;
       }
     });
     return { total, completed };
-  }, [habits, completions]);
+  }, [habits, completions, schedules]);
 
   const getHabitWeeklyRate = useCallback((habitId: string) => {
+    const schedule = schedules[habitId] || ALL_DAYS;
+    if (schedule.length === 0) return 0;
     let completed = 0;
-    for (let i = 0; i < 7; i++) {
-      if (completions[habitId]?.[i] === 'done') {
-        completed++;
-      }
-    }
-    return Math.round((completed / 7) * 100);
-  }, [completions]);
+    schedule.forEach(dayIndex => {
+      if (completions[habitId]?.[dayIndex] === 'done') completed++;
+    });
+    return Math.round((completed / schedule.length) * 100);
+  }, [completions, schedules]);
 
   const calculateStreak = useCallback((habitId: string): number => {
     const today = new Date();
     const days = getDaysOfWeek(weekStart);
+    const schedule = schedules[habitId] || ALL_DAYS;
     let streak = 0;
-    
-    // Find today's index in the week
-    const todayIndex = days.findIndex(d => 
-      d.toDateString() === today.toDateString()
-    );
-    
+
+    const todayIndex = days.findIndex(d => d.toDateString() === today.toDateString());
     if (todayIndex === -1) return 0;
-    
-    // Count backwards from today
+
     for (let i = todayIndex; i >= 0; i--) {
+      if (!schedule.includes(i)) continue;
       if (completions[habitId]?.[i] === 'done') {
         streak++;
       } else {
         break;
       }
     }
-    
     return streak;
-  }, [completions, weekStart]);
+  }, [completions, weekStart, schedules]);
+
+  const clearWeekHabits = useCallback(() => {
+    const empty: HabitCompletions = {};
+    setCompletions(empty);
+    saveCompletions(weekKey, empty);
+  }, [weekKey]);
 
   return {
-    habits,
-    addHabit,
-    updateHabit,
-    deleteHabit,
-    cycleHabitStatus,
-    getHabitStatus,
-    getDayHabitStats,
-    getHabitWeeklyRate,
-    calculateStreak,
+    habits, addHabit, updateHabit, deleteHabit,
+    cycleHabitStatus, getHabitStatus,
+    getDayHabitStats, getHabitWeeklyRate, calculateStreak,
+    getHabitSchedule, setHabitSchedule, isHabitScheduledForDay,
+    clearWeekHabits,
   };
 }

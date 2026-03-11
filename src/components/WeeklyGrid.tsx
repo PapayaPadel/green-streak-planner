@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { getDaysOfWeek, isToday } from '@/lib/dateUtils';
 import { DayColumn } from './DayColumn';
 import { MobileDayCard } from './MobileDayCard';
-import { useWeekTasksContext } from '@/contexts/TrackerContext';
+import { useWeekTasksContext, useHabitsContext } from '@/contexts/TrackerContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface WeeklyGridProps {
@@ -13,15 +13,10 @@ export function WeeklyGrid({ weekStart }: WeeklyGridProps) {
   const days = getDaysOfWeek(weekStart);
   const isMobile = useIsMobile();
   const {
-    getDayTasks,
-    addTask,
-    toggleTask,
-    updateTask,
-    deleteTask,
-    getDayStats,
+    getDayTasks, addTask, toggleTask, updateTask, deleteTask, getDayStats,
+    getRecurringDefForTask, setTaskRecurrence, copyTaskToDay, copyTaskToNextWeek,
   } = useWeekTasksContext();
 
-  // Find today's index for mobile default
   const todayIdx = useMemo(() => {
     const idx = days.findIndex((d) => isToday(d));
     return idx >= 0 ? idx : 0;
@@ -44,6 +39,11 @@ export function WeeklyGrid({ weekStart }: WeeklyGridProps) {
         onDeleteTask={(taskId) => deleteTask(date, taskId)}
         onPrevDay={() => setMobileDayIndex((i) => Math.max(0, i - 1))}
         onNextDay={() => setMobileDayIndex((i) => Math.min(6, i + 1))}
+        days={days}
+        getRecurringDef={getRecurringDefForTask}
+        onSetRecurrence={(taskId, selectedDays) => setTaskRecurrence(date, taskId, selectedDays)}
+        onCopyToDay={(task, targetDate) => copyTaskToDay(task, targetDate)}
+        onCopyToNextWeek={(task) => copyTaskToNextWeek(task, date)}
       />
     );
   }
@@ -60,6 +60,11 @@ export function WeeklyGrid({ weekStart }: WeeklyGridProps) {
           onToggleTask={(taskId) => toggleTask(date, taskId)}
           onUpdateTask={(taskId, newText) => updateTask(date, taskId, newText)}
           onDeleteTask={(taskId) => deleteTask(date, taskId)}
+          days={days}
+          getRecurringDef={getRecurringDefForTask}
+          onSetRecurrence={(taskId, selectedDays) => setTaskRecurrence(date, taskId, selectedDays)}
+          onCopyToDay={(task, targetDate) => copyTaskToDay(task, targetDate)}
+          onCopyToNextWeek={(task) => copyTaskToNextWeek(task, date)}
         />
       ))}
     </div>

@@ -40,7 +40,8 @@
     --accent: 122 35% 75%;
     --accent-foreground: 123 43% 20%;
 
-    --destructive: 0 84.2% 60.2%;
+    /* Dusty rose — softened red */
+    --destructive: 0 69% 67%;
     --destructive-foreground: 0 0% 100%;
 
     --success: 122 39% 49%;
@@ -112,7 +113,8 @@
     --accent: 122 25% 30%;
     --accent-foreground: 125 39% 90%;
 
-    --destructive: 0 62.8% 40%;
+    /* Dusty rose — softened red for dark mode */
+    --destructive: 0 55% 55%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 123 30% 20%;
@@ -197,6 +199,12 @@
   .day-header-today {
     background-color: hsl(var(--day-header-today));
     color: hsl(var(--primary-foreground));
+  }
+
+  /* Ensure white text on headers in dark mode */
+  .dark .day-header,
+  .dark .day-header-today {
+    color: hsl(0 0% 95%);
   }
 
   .progress-bar-fill {
