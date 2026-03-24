@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Repeat, Copy, Check, X } from 'lucide-react';
 import { format, addDays } from 'date-fns';
 import { Task, RecurringTaskDef } from '@/hooks/useWeekTasks';
-import { SHORT_DAY_NAMES } from '@/lib/dateUtils';
+import { ALL_SHORT_DAY_NAMES } from '@/lib/dateUtils';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
