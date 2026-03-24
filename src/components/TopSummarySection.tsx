@@ -142,7 +142,7 @@ function DesktopHabitGrid() {
           return (
             <div key={habit.id} className={cn('flex items-center gap-1 py-1 px-1 rounded group', index % 2 === 0 ? 'bg-card' : 'bg-pale-green')}>
               {/* Name */}
-              <div className="w-20 shrink-0">
+              <div className="w-40 shrink-0">
                 {editingHabitId === habit.id ? (
                   <Input value={editName} onChange={(e) => setEditName(e.target.value)}
                     onBlur={() => handleSaveEdit(habit.id)}
