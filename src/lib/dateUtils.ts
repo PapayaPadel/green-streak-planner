@@ -23,6 +23,10 @@ export function formatWeekRange(weekStart: Date): string {
 }
 
 export function getDaysOfWeek(weekStart: Date): Date[] {
+  return Array.from({ length: 5 }, (_, i) => addDays(weekStart, i));
+}
+
+export function getAllDaysOfWeek(weekStart: Date): Date[] {
   return Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 }
 
