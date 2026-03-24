@@ -129,7 +129,7 @@ function DesktopHabitGrid() {
           ))}
         </div>
         <div className="w-10 text-[10px] font-medium text-muted-foreground text-center">🔥</div>
-        <div className="w-[52px] text-[10px] font-medium text-muted-foreground text-center">Rate</div>
+        <div className="w-30 text-[10px] font-medium text-muted-foreground text-center">Rate</div>
         <div className="w-16" />
       </div>
       {/* Rows */}
