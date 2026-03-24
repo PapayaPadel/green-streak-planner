@@ -152,9 +152,9 @@ function DesktopHabitGrid() {
                   <span className="text-xs leading-tight line-clamp-2 break-words">{habit.name}</span>
                 )}
               </div>
-              {/* Day toggles */}
+              {/* Day toggles — only Mon-Fri */}
               <div className="flex gap-0.5">
-                {Array.from({ length: 7 }).map((_, dayIndex) => (
+                {Array.from({ length: 5 }).map((_, dayIndex) => (
                   <HabitStatusButton
                     key={dayIndex}
                     status={getHabitStatus(habit.id, dayIndex)}
