@@ -30,7 +30,7 @@ export function WeeklyGrid({ weekStart }: WeeklyGridProps) {
       <MobileDayCard
         date={date}
         dayIndex={mobileDayIndex}
-        totalDays={7}
+        totalDays={5}
         tasks={getDayTasks(date)}
         stats={getDayStats(date)}
         onAddTask={(text) => addTask(date, text)}
@@ -38,7 +38,7 @@ export function WeeklyGrid({ weekStart }: WeeklyGridProps) {
         onUpdateTask={(taskId, newText) => updateTask(date, taskId, newText)}
         onDeleteTask={(taskId) => deleteTask(date, taskId)}
         onPrevDay={() => setMobileDayIndex((i) => Math.max(0, i - 1))}
-        onNextDay={() => setMobileDayIndex((i) => Math.min(6, i + 1))}
+        onNextDay={() => setMobileDayIndex((i) => Math.min(4, i + 1))}
         days={days}
         getRecurringDef={getRecurringDefForTask}
         onSetRecurrence={(taskId, selectedDays) => setTaskRecurrence(date, taskId, selectedDays)}
