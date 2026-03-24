@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Plus, Trash2, Check, X, Edit2, ChevronDown, ChevronLeft, ChevronRight, Flame, CalendarDays } from 'lucide-react';
 import { format } from 'date-fns';
-import { getDaysOfWeek, SHORT_DAY_NAMES, formatWeekRange, isToday } from '@/lib/dateUtils';
+import { getDaysOfWeek, SHORT_DAY_NAMES, ALL_SHORT_DAY_NAMES, formatWeekRange, isToday } from '@/lib/dateUtils';
 import { useWeekTasksContext, useHabitsContext } from '@/contexts/TrackerContext';
 import { HabitStatus, Habit } from '@/hooks/useHabits';
 import { Button } from '@/components/ui/button';
