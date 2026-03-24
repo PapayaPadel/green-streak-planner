@@ -122,7 +122,7 @@ function DesktopHabitGrid() {
       <h3 className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">Habit Tracker</h3>
       {/* Header */}
       <div className="flex items-center gap-1 mb-1 min-w-0">
-        <div className="w-40 shrink-0 text-[10px] font-medium text-muted-foreground">Habit</div>
+        <div className="w-60 shrink-0 text-[10px] font-medium text-muted-foreground">Habit</div>
         <div className="flex gap-0.5">
           {SHORT_DAY_NAMES.map((day) => (
             <div key={day} className="w-8 text-center text-[10px] font-medium text-muted-foreground">{day}</div>
