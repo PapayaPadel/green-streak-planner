@@ -186,7 +186,7 @@ function DesktopHabitGrid() {
                   <PopoverContent className="w-auto p-3" align="end">
                     <p className="text-xs font-medium mb-2">Scheduled days</p>
                     <div className="flex gap-1">
-                      {SHORT_DAY_NAMES.map((day, i) => (
+                      {ALL_SHORT_DAY_NAMES.map((day, i) => (
                         <button key={i} onClick={() => {
                           const newDays = schedule.includes(i) ? schedule.filter(d => d !== i) : [...schedule, i].sort();
                           setHabitSchedule(habit.id, newDays);
