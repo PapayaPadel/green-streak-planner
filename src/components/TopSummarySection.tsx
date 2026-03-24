@@ -129,7 +129,7 @@ function DesktopHabitGrid() {
           ))}
         </div>
         <div className="w-10 text-[10px] font-medium text-muted-foreground text-center">🔥</div>
-        <div className="w-[52px] text-[10px] font-medium text-muted-foreground text-center">Rate</div>
+        <div className="w-30 text-[10px] font-medium text-muted-foreground text-center">Rate</div>
         <div className="w-16" />
       </div>
       {/* Rows */}
@@ -169,7 +169,7 @@ function DesktopHabitGrid() {
                 <span className="text-[10px] font-semibold">{streak}</span>
               </div>
               {/* Progress bar */}
-              <div className="flex items-center gap-1 w-[52px]">
+              <div className="flex items-center gap-1 w-30">
                 <div className="flex-1 h-2 bg-light-green rounded-full overflow-hidden">
                   <div className="h-full rounded-full bg-accent-green transition-all" style={{ width: `${rate}%` }} />
                 </div>
