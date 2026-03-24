@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { format, addDays, addWeeks } from 'date-fns';
-import { getWeekKey } from '@/lib/dateUtils';
+import { getWeekKey, getDaysOfWeek } from '@/lib/dateUtils';
 
 export interface Task {
   id: string;
