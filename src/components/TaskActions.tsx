@@ -45,7 +45,7 @@ export function RecurrencePopover({ task, recurringDef, onSave, compact = true }
       <PopoverContent className="w-auto p-3" align="end">
         <p className="text-xs font-medium mb-2">Repeat on</p>
         <div className="flex gap-1 mb-3">
-          {SHORT_DAY_NAMES.map((name, i) => (
+          {ALL_SHORT_DAY_NAMES.map((name, i) => (
             <button key={i} onClick={() => toggleDay(i)}
               className={cn('w-8 h-8 rounded text-xs font-medium transition-colors',
                 days.includes(i) ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
