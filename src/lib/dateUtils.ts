@@ -1,7 +1,9 @@
 import { startOfWeek, endOfWeek, format, addDays, isSameDay, addWeeks, subWeeks, parseISO } from 'date-fns';
 
-export const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const;
-export const SHORT_DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
+export const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] as const;
+export const SHORT_DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'] as const;
+export const ALL_DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const;
+export const ALL_SHORT_DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
 
 export function getWeekStart(date: Date): Date {
   return startOfWeek(date, { weekStartsOn: 1 }); // Monday
@@ -16,11 +18,15 @@ export function getWeekKey(weekStart: Date): string {
 }
 
 export function formatWeekRange(weekStart: Date): string {
-  const weekEnd = getWeekEnd(weekStart);
+  const weekEnd = addDays(weekStart, 4); // Friday
   return `${format(weekStart, 'MMMM dd')} – ${format(weekEnd, 'MMMM dd, yyyy')}`;
 }
 
 export function getDaysOfWeek(weekStart: Date): Date[] {
+  return Array.from({ length: 5 }, (_, i) => addDays(weekStart, i));
+}
+
+export function getAllDaysOfWeek(weekStart: Date): Date[] {
   return Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 }
 

@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { format, addDays, addWeeks } from 'date-fns';
-import { getWeekKey } from '@/lib/dateUtils';
+import { getWeekKey, getDaysOfWeek } from '@/lib/dateUtils';
 
 export interface Task {
   id: string;
@@ -128,15 +128,19 @@ export function useWeekTasks(weekStart: Date) {
   }, [tasks, weekKey, getDayKey]);
 
   const getWeekStats = useCallback(() => {
+    // Only count Mon-Fri (first 5 days)
+    const weekDays = getDaysOfWeek(weekStart);
     let totalTasks = 0;
     let completedTasks = 0;
-    Object.values(tasks).forEach(dayTasks => {
+    weekDays.forEach(date => {
+      const dayKey = getDayKey(date);
+      const dayTasks = tasks[dayKey] || [];
       totalTasks += dayTasks.length;
       completedTasks += dayTasks.filter(t => t.completed).length;
     });
     const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
     return { totalTasks, completedTasks, percentage };
-  }, [tasks]);
+  }, [tasks, weekStart, getDayKey]);
 
   const getDayStats = useCallback((date: Date) => {
     const dayTasks = getDayTasks(date);

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Plus, Trash2, Check, X, Edit2, ChevronDown, ChevronLeft, ChevronRight, Flame, CalendarDays } from 'lucide-react';
 import { format } from 'date-fns';
-import { getDaysOfWeek, SHORT_DAY_NAMES, formatWeekRange, isToday } from '@/lib/dateUtils';
+import { getDaysOfWeek, SHORT_DAY_NAMES, ALL_SHORT_DAY_NAMES, formatWeekRange, isToday } from '@/lib/dateUtils';
 import { useWeekTasksContext, useHabitsContext } from '@/contexts/TrackerContext';
 import { HabitStatus, Habit } from '@/hooks/useHabits';
 import { Button } from '@/components/ui/button';
@@ -122,14 +122,14 @@ function DesktopHabitGrid() {
       <h3 className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">Habit Tracker</h3>
       {/* Header */}
       <div className="flex items-center gap-1 mb-1 min-w-0">
-        <div className="w-20 shrink-0 text-[10px] font-medium text-muted-foreground">Habit</div>
+        <div className="w-40 shrink-0 text-[10px] font-medium text-muted-foreground">Habit</div>
         <div className="flex gap-0.5">
           {SHORT_DAY_NAMES.map((day) => (
             <div key={day} className="w-8 text-center text-[10px] font-medium text-muted-foreground">{day}</div>
           ))}
         </div>
         <div className="w-10 text-[10px] font-medium text-muted-foreground text-center">🔥</div>
-        <div className="w-[104px] text-[10px] font-medium text-muted-foreground text-center">Rate</div>
+        <div className="flex-1 min-w-[104px] text-[10px] font-medium text-muted-foreground text-center">Rate</div>
         <div className="w-16" />
       </div>
       {/* Rows */}
@@ -142,7 +142,7 @@ function DesktopHabitGrid() {
           return (
             <div key={habit.id} className={cn('flex items-center gap-1 py-1 px-1 rounded group', index % 2 === 0 ? 'bg-card' : 'bg-pale-green')}>
               {/* Name */}
-              <div className="w-20 shrink-0">
+              <div className="w-40 shrink-0">
                 {editingHabitId === habit.id ? (
                   <Input value={editName} onChange={(e) => setEditName(e.target.value)}
                     onBlur={() => handleSaveEdit(habit.id)}
@@ -152,9 +152,9 @@ function DesktopHabitGrid() {
                   <span className="text-xs leading-tight line-clamp-2 break-words">{habit.name}</span>
                 )}
               </div>
-              {/* Day toggles */}
+              {/* Day toggles — only Mon-Fri */}
               <div className="flex gap-0.5">
-                {Array.from({ length: 7 }).map((_, dayIndex) => (
+                {Array.from({ length: 5 }).map((_, dayIndex) => (
                   <HabitStatusButton
                     key={dayIndex}
                     status={getHabitStatus(habit.id, dayIndex)}
@@ -169,11 +169,11 @@ function DesktopHabitGrid() {
                 <span className="text-[10px] font-semibold">{streak}</span>
               </div>
               {/* Progress bar */}
-              <div className="flex items-center gap-1 w-[104px]">
-                <div className="w-[80px] h-2 bg-light-green rounded-full overflow-hidden">
+              <div className="flex items-center gap-1 flex-1 min-w-[104px]">
+                <div className="flex-1 h-2 bg-light-green rounded-full overflow-hidden">
                   <div className="h-full rounded-full bg-accent-green transition-all" style={{ width: `${rate}%` }} />
                 </div>
-                <span className="text-[10px] text-muted-foreground w-5 text-right">{rate}%</span>
+                <span className="text-[10px] text-muted-foreground w-7 text-right shrink-0">{rate}%</span>
               </div>
               {/* Actions */}
               <div className="flex gap-0 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
@@ -186,7 +186,7 @@ function DesktopHabitGrid() {
                   <PopoverContent className="w-auto p-3" align="end">
                     <p className="text-xs font-medium mb-2">Scheduled days</p>
                     <div className="flex gap-1">
-                      {SHORT_DAY_NAMES.map((day, i) => (
+                      {ALL_SHORT_DAY_NAMES.map((day, i) => (
                         <button key={i} onClick={() => {
                           const newDays = schedule.includes(i) ? schedule.filter(d => d !== i) : [...schedule, i].sort();
                           setHabitSchedule(habit.id, newDays);

@@ -55,7 +55,7 @@ function saveSchedules(schedules: HabitSchedules): void {
   import('@/components/SaveIndicator').then(m => m.emitSave());
 }
 
-const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
+const ALL_DAYS = [0, 1, 2, 3, 4]; // Mon-Fri only
 
 export function useHabits(weekStart: Date) {
   const weekKey = getWeekKey(weekStart);
