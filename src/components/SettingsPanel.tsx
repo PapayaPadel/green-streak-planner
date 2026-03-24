@@ -1,7 +1,7 @@
 import { X, Sun, Moon, Check, Download, Upload, Trash2, AlertTriangle } from 'lucide-react';
 import { ColorScheme, useSettings } from '@/hooks/useSettings';
 import { useWeekTasksContext, useHabitsContext } from '@/contexts/TrackerContext';
-import { SHORT_DAY_NAMES } from '@/lib/dateUtils';
+import { ALL_SHORT_DAY_NAMES } from '@/lib/dateUtils';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import {
