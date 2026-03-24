@@ -176,7 +176,7 @@ export function SettingsPanel({ isOpen, onClose, weekStart }: SettingsPanelProps
                     <div className="min-w-0">
                       <p className="text-sm font-medium truncate">{def.text}</p>
                       <div className="flex gap-1 mt-1">
-                        {SHORT_DAY_NAMES.map((day, i) => (
+                        {ALL_SHORT_DAY_NAMES.map((day, i) => (
                           <span key={i} className={cn('text-[10px] px-1.5 py-0.5 rounded',
                             def.days.includes(i) ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
                           )}>{day}</span>
