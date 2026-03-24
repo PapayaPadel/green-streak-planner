@@ -18,7 +18,7 @@ export function getWeekKey(weekStart: Date): string {
 }
 
 export function formatWeekRange(weekStart: Date): string {
-  const weekEnd = getWeekEnd(weekStart);
+  const weekEnd = addDays(weekStart, 4); // Friday
   return `${format(weekStart, 'MMMM dd')} – ${format(weekEnd, 'MMMM dd, yyyy')}`;
 }
 
